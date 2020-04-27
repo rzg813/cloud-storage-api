@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity('pf_storage')
-export class User {
+export class Storage {
   @PrimaryColumn({
     name: 'id',
     type: 'varchar',
@@ -20,7 +20,7 @@ export class User {
   @Column({ name: 'title', type: 'varchar', length: 128, comment: '资源名称' })
   title: string;
 
-  @Column({ name: 'title', type: 'varchar', length: 256, comment: '资源地址' })
+  @Column({ name: 'src', type: 'varchar', length: 256, comment: '资源地址' })
   src: string;
 
   @Column({ name: 'path', type: 'varchar', length: 128, comment: '资源路径' })
@@ -46,9 +46,8 @@ export class User {
   createdAt: string;
 
   @Column({
-    name: 'refTable',
+    name: 'deleted',
     type: 'int',
-    length: 2,
     comment: '是否已删除,0-未删除，1-删除',
   })
   deleted: number;
