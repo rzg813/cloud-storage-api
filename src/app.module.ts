@@ -3,11 +3,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { OssModule } from './oss/oss.module';
-import { CosModule } from './cos/cos.module';
-
+import { OssModule } from './modules/oss/oss.module';
+import { CosModule } from './modules/cos/cos.module';
+import { StorageModule } from './modules/storage/storage.module';
+import { UserModule } from './modules/user/user.module';
 @Module({
-  imports: [TypeOrmModule.forRoot(), OssModule, CosModule],
+  imports: [
+    TypeOrmModule.forRoot(),
+    OssModule,
+    CosModule,
+    StorageModule,
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
