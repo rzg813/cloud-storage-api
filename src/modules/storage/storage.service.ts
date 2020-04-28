@@ -15,11 +15,19 @@ export class StorageService {
   // 分页查询，带条件查询
   async findPage(storageQuery: StorageQuery): Promise<PageResult<Storage>> {
     const queryBuilder = this.storageRepository.createQueryBuilder('storage');
-    if (storageQuery.page) {
-      const { pageIndex, pageSize } = storageQuery.page;
+    console.log(storageQuery);
+    if (storageQuery.deleted) {
+      queryBuilder.where('storage.deleted=' + storageQuery.deleted);
+    } else {
+      queryBuilder.where('storage.deleted=0');
+    }
+    if (storageQuery) {
+      let { pageIndex, pageSize } = storageQuery;
+      if (pageIndex || pageIndex === 0) pageIndex = 1;
+      if (pageSize || pageSize === 0) pageSize = 10;
       queryBuilder
-        .skip(pageIndex > 0 ? pageIndex : 1)
-        .take(pageSize > 0 ? pageSize : 10);
+        .take(pageSize) //Sets maximal number of entities to take.
+        .skip(pageSize * (pageIndex - 1)); //Sets number of entities to skip.
     }
     if (storageQuery.title) {
       queryBuilder.andWhere('(storage.title LIKE :title)');
@@ -27,19 +35,16 @@ export class StorageService {
     if (storageQuery.tags) {
       queryBuilder.andWhere('(storage.tags LIKE :tags)');
     }
-    if (storageQuery.deleted) {
-      queryBuilder.where('storage.deleted=' + storageQuery.deleted);
-    } else {
-      queryBuilder.where('storage.deleted=0');
-    }
     queryBuilder.orderBy('storage.createAt', 'DESC').setParameters({
       title: '%' + storageQuery.title + '%',
       tags: '%' + storageQuery.tags + '%',
     });
     const result = new PageResult<Storage>();
-    result.data = await queryBuilder.getMany();
-    result.pageIndex = storageQuery.page.pageIndex;
-    result.pageSize = storageQuery.page.pageSize;
+    const [entities, total] = await queryBuilder.getManyAndCount();
+    result.data = entities;
+    result.total = total;
+    result.pageIndex = storageQuery.pageIndex;
+    result.pageSize = storageQuery.pageSize;
     return result;
   }
 

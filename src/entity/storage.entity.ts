@@ -12,7 +12,7 @@ export class Storage {
   @PrimaryColumn({
     name: 'id',
     type: 'varchar',
-    length: 32,
+    length: 36,
     comment: '资源存储ID',
   })
   @Generated('uuid') // 自动生成列
@@ -59,16 +59,17 @@ export class Storage {
   })
   creator: string;
 
-  @CreateDateColumn({ name: 'createdAt', comment: '创建时间' })
-  createdAt: string;
+  @CreateDateColumn({ name: 'createAt', comment: '创建时间' })
+  createAt: string;
 
-  @UpdateDateColumn({ name: 'updatedAt', comment: '更新时间' })
-  updatedAt: string;
+  @UpdateDateColumn({ name: 'updateAt', comment: '更新时间' })
+  updateAt: string;
 
   @Column({
     name: 'deleted',
     type: 'int',
     comment: '是否已删除,0-未删除，1-删除',
+    default: 0,
   })
   deleted: number;
 }
