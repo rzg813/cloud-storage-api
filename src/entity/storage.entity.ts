@@ -55,7 +55,8 @@ export class Storage {
     name: 'creator',
     type: 'varchar',
     length: 128,
-    comment: '引用表名',
+    default: '管理员',
+    comment: '创建人',
   })
   creator: string;
 

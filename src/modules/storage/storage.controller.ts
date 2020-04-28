@@ -24,7 +24,7 @@ export class StorageController {
     return this.storageService.create(storageDto);
   }
   @ApiOperation({ summary: '分页数据查询' })
-  @Get('page')
+  @Get()
   findPage(@Query() storageQuery: StorageQuery): Promise<PageResult<Storage>> {
     return this.storageService.findPage(storageQuery);
   }
