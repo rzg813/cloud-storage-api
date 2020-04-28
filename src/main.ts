@@ -20,6 +20,20 @@ async function bootstrap() {
     .setTitle('在线接口文档')
     .setDescription('The Cloud Storage API Description')
     .setVersion('1.0')
+    .addApiKey(
+      { type: 'apiKey', name: 'Authorization', in: 'query' },
+      'parameters',
+    )
+    .addBasicAuth(
+      {
+        type: 'http',
+        scheme: 'basic',
+        name: 'Authorization',
+        in: 'header',
+        description: '全局token请求头配置',
+      },
+      'parameters',
+    )
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
