@@ -2,15 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../../entity/user.entity';
 export class AuthDto {
   @ApiProperty({ required: false })
-  loginName: string;
+  username: string;
   @ApiProperty({ required: false })
   password: string;
   @ApiProperty({ required: false })
   openid: string;
-  @ApiProperty({ required: false })
-  mobile: string;
-  @ApiProperty({ required: false })
-  email: string;
   @ApiProperty({ required: false, title: '验证码' })
   code: string;
 }

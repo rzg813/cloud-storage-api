@@ -91,14 +91,14 @@ export class User {
     default: 0,
     comment: '账号是否锁定，0-正常，1-锁定',
   })
-  locked: string;
+  locked: number;
   @Column({
     name: 'enabled',
     type: 'int',
     default: 0,
     comment: '是否启用，0-启用，1-禁用',
   })
-  enabled: string;
+  enabled: number;
 
   @CreateDateColumn({ name: 'createAt', comment: '创建时间' })
   createAt: string;
