@@ -16,7 +16,7 @@ export class Storage {
     comment: '资源存储ID',
   })
   @Generated('uuid') // 自动生成列
-  id: number;
+  id: string;
 
   @Column({ name: 'title', type: 'varchar', length: 128, comment: '资源名称' })
   title: string;

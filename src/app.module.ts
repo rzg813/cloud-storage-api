@@ -7,6 +7,7 @@ import { OssModule } from './modules/oss/oss.module';
 import { CosModule } from './modules/cos/cos.module';
 import { StorageModule } from './modules/storage/storage.module';
 import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(),
@@ -14,6 +15,7 @@ import { UserModule } from './modules/user/user.module';
     CosModule,
     StorageModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

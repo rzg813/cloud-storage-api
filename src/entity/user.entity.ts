@@ -16,7 +16,7 @@ export class User {
     comment: '用户ID',
   })
   @Generated('uuid') // 自动生成列
-  id: number;
+  id: string;
 
   @Column({
     name: 'loginName',

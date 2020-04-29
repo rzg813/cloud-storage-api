@@ -11,9 +11,8 @@ import {
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { StorageService } from './storage.service';
 import { Storage } from '../../entity/storage.entity';
-import { StorageDto } from './storage.dto';
+import { StorageDto, StorageQuery } from './storage.dto';
 import { PageResult } from '../page.common';
-import { StorageQuery } from '../storage/storage.dto';
 @Controller('storage')
 @ApiTags('对象存储数据操作')
 export class StorageController {

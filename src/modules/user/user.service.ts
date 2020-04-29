@@ -57,6 +57,30 @@ export class UserService {
   async findOne(id: string): Promise<User> {
     return await this.userRepository.findOne(id);
   }
+
+  // 根据调整查询
+  async findOneBy(keyword: string): Promise<User> {
+    const queryBuilder = this.userRepository.createQueryBuilder('user');
+    queryBuilder
+      .where('user.deleted=0')
+      .andWhere('(user.mobile LIKE :keyword OR user.loginName=:keyword)')
+      .setParameters({
+        keyword: keyword,
+      });
+    return await queryBuilder.getOne();
+  }
+  // 根据openid查询用户
+  async findOneByOpenid(openid: string): Promise<User> {
+    const queryBuilder = this.userRepository.createQueryBuilder('user');
+    queryBuilder
+      .where('user.deleted=0')
+      .andWhere('(user.openid=:openid)')
+      .setParameters({
+        openid: openid,
+      });
+    return await queryBuilder.getOne();
+  }
+
   // 创建
   async create(userDto: UserDto): Promise<User> {
     const user = new User();

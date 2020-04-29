@@ -6,14 +6,12 @@ import {
   Body,
   Param,
   Query,
-  Put,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { User } from '../../entity/user.entity';
-import { UserDto } from './user.dto';
+import { UserDto, UserQuery } from './user.dto';
 import { PageResult } from '../page.common';
-import { UserQuery } from '../user/user.dto';
 
 @Controller('user')
 @ApiTags('对用户数据操作')
