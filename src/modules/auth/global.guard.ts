@@ -43,6 +43,7 @@ export class GlobalGuard implements CanActivate {
     '/auth/login',
     '/auth/loginx',
     '/auth/weixin',
+    '/captcha',
   ];
 
   // 验证该次请求是否为白名单内的路由
