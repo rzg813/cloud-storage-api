@@ -1,15 +1,18 @@
 import {
   Controller,
   Post,
+  Get,
   Body,
   HttpException,
   HttpStatus,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { UserService } from '../user/user.service';
 import { AuthService } from '../auth/auth.service';
 import { AuthDto, AuthUser } from './auth.dto';
-import { User } from '../../entity/user.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('登录')
 @Controller('auth')
@@ -31,7 +34,6 @@ export class AuthController {
       );
     }
     const user = await this.authService.validateUser(username, password);
-    console.log(user);
     if (user) {
       if (user.enabled === 1) {
         throw new HttpException(
@@ -47,5 +49,14 @@ export class AuthController {
       return new AuthUser().copyProperties(user, accessToken);
     }
     throw new HttpException('Forbidden', HttpStatus.UNAUTHORIZED);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '用户信息' })
+  @UseGuards(AuthGuard())
+  @Get('profile')
+  getHello(@Req() req): string {
+    console.log('进入profile......');
+    return req.user;
   }
 }

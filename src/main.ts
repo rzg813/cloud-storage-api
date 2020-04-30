@@ -4,7 +4,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './filter/http-exception.filter';
 import { TransformInterceptor } from './interceptor/transform.interceptor';
-import { AuthGuard } from './auth.guard';
+import { GlobalGuard } from './modules/auth/global.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -16,13 +16,14 @@ async function bootstrap() {
   // 全局注册拦截器
   app.useGlobalInterceptors(new TransformInterceptor());
   // 设置全局守卫，拦截token参数
-  app.useGlobalGuards(new AuthGuard());
+  app.useGlobalGuards(new GlobalGuard());
 
   //配置Swagger
   const options = new DocumentBuilder()
     .setTitle('在线接口文档')
     .setDescription('The Cloud Storage API Description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
