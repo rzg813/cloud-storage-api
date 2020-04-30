@@ -14,7 +14,7 @@ export class GlobalGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest();
     console.log('进入全局拦截，当前请求地址：' + req.path);
-    if (req.path === '/auth/login') {
+    if (req.path === '/auth/login' || req.path === '/auth/weixin') {
       return true;
     }
     // 过滤不带token的请求，直接返回非法请求

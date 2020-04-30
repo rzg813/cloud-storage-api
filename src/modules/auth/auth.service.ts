@@ -19,10 +19,6 @@ export class AuthService {
     return null;
   }
 
-  async validateUserByOpenid(openid: string): Promise<any> {
-    return openid;
-  }
-
   async login(user: any) {
     const payload = {
       userId: user.id,

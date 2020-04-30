@@ -24,7 +24,7 @@ export class AuthController {
 
   @ApiOperation({ summary: '用户登录' })
   @Post('login')
-  async create(@Body() authDto: AuthDto): Promise<Record<string, any>> {
+  async login(@Body() authDto: AuthDto): Promise<Record<string, any>> {
     const { username, password, code } = authDto;
     // 验证码有效性检查
     if (code) {
@@ -58,5 +58,17 @@ export class AuthController {
   getHello(@Req() req): string {
     console.log('进入profile......');
     return req.user;
+  }
+
+  @Post('weixin')
+  @ApiOperation({ summary: '微信openid登录' })
+  @UseGuards(AuthGuard('wechat'))
+  async weixin(
+    @Body() authDto: AuthDto,
+    @Req() req,
+  ): Promise<Record<string, any>> {
+    // 生成 AccessToken
+    const { accessToken } = await this.authService.login(req.user);
+    return new AuthUser().copyProperties(req.user, accessToken);
   }
 }
