@@ -60,6 +60,18 @@ export class AuthController {
     return req.user;
   }
 
+  @Post('loginx')
+  @ApiOperation({ summary: '账号密码登录' })
+  @UseGuards(AuthGuard('local'))
+  async loginx(
+    @Body() authDto: AuthDto,
+    @Req() req,
+  ): Promise<Record<string, any>> {
+    // 生成 AccessToken
+    const { accessToken } = await this.authService.login(req.user);
+    return new AuthUser().copyProperties(req.user, accessToken);
+  }
+
   @Post('weixin')
   @ApiOperation({ summary: '微信openid登录' })
   @UseGuards(AuthGuard('wechat'))

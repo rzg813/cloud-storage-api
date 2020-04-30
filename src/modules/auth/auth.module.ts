@@ -9,6 +9,7 @@ import { jwtConstants } from '../../utils/constants.utils';
 import { JwtStrategy } from './jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { WechatStrategy } from './wechat.strategy';
+import { LocalStrategy } from './local.strategy';
 
 @Module({
   imports: [
@@ -21,6 +22,12 @@ import { WechatStrategy } from './wechat.strategy';
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [AuthController],
-  providers: [UserService, AuthService, JwtStrategy, WechatStrategy],
+  providers: [
+    UserService,
+    AuthService,
+    JwtStrategy,
+    LocalStrategy,
+    WechatStrategy,
+  ],
 })
 export class AuthModule {}
